@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IFAROY - Abadi Dalam Kenangan</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Playfair Display & Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pinky: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff1f2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fda4af;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #fb7185;
+        }
+
+        /* Floating Hearts Animation */
+        .heart-particle {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.8;
+            animation: floatUp 4s linear forwards;
+            z-index: 9999;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.8) rotate(0deg);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.3) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-pinky-50 font-sans text-gray-700 antialiased relative selection:bg-pinky-300 selection:text-white">
+
+    <!-- Audio Element for Background Music -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-love-114446.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <!-- Music Toggle Button (Floating) -->
+    <button id="musicToggleBtn" onclick="toggleMusic()" class="fixed bottom-6 right-6 z-50 bg-pinky-500 text-white p-4 rounded-full shadow-lg hover:bg-pinky-600 transition-all duration-300 transform hover:scale-110 flex items-center justify-center group focus:outline-none" title="Putar Musik">
+        <i id="musicIcon" class="fas fa-music text-xl"></i>
+        <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-sm font-medium ml-0 group-hover:ml-2">
+            Musik Romantis
+        </span>
+    </button>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-md shadow-sm border-b border-pinky-100 transition-all">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#home" class="flex items-center space-x-2 group">
+                <i class="fas fa-heart text-pinky-500 text-2xl transform group-hover:scale-125 transition-transform duration-300"></i>
+                <span class="font-serif font-extrabold text-2xl tracking-widest bg-gradient-to-r from-pinky-500 to-pinky-700 bg-clip-text text-transparent">
+                    IFAROY
+                </span>
+            </a>
+
+            <!-- Nav Links -->
+            <nav class="hidden md:flex space-x-8 font-medium text-gray-600 text-sm tracking-wide">
+                <a href="#home" class="hover:text-pinky-600 transition-colors py-2 border-b-2 border-transparent hover:border-pinky-400">Beranda</a>
+                <a href="#gallery" class="hover:text-pinky-600 transition-colors py-2 border-b-2 border-transparent hover:border-pinky-400">Galeri Foto</a>
+                <a href="#video" class="hover:text-pinky-600 transition-colors py-2 border-b-2 border-transparent hover:border-pinky-400">Video Kenangan</a>
+                <a href="#quote" class="hover:text-pinky-600 transition-colors py-2 border-b-2 border-transparent hover:border-pinky-400">Pesan Cinta</a>
+            </nav>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobileMenuBtn" class="md:hidden text-gray-600 hover:text-pinky-600 focus:outline-none p-2">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white/95 border-b border-pinky-100 px-4 pt-2 pb-4 space-y-2">
+            <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-pinky-50 hover:text-pinky-600">Beranda</a>
+            <a href="#gallery" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-pinky-50 hover:text-pinky-600">Galeri Foto</a>
+            <a href="#video" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-pinky-50 hover:text-pinky-600">Video Kenangan</a>
+            <a href="#quote" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-pinky-50 hover:text-pinky-600">Pesan Cinta</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="relative min-h-[85vh] flex items-center justify-center overflow-hidden py-16 px-4">
+        <div class="absolute -top-12 -left-12 w-64 h-64 bg-pinky-200/50 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-0 w-80 h-80 bg-pinky-300/40 rounded-full blur-3xl"></div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <span class="inline-block bg-pinky-100 text-pinky-600 px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide uppercase mb-4 shadow-sm border border-pinky-200">
+                <i class="fas fa-sparkles mr-1.5"></i> Kisah Cinta Kita
+            </span>
+            <h1 class="font-serif text-5xl md:text-7xl font-bold text-gray-800 mb-6 leading-tight">
+                IFAROY
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8 font-light leading-relaxed">
+                "Di setiap detik yang berlalu, ada cerita indah yang kita ukir bersama. Ini adalah ruang kecil untuk menyimpan seluruh senyuman, tawa, dan kenangan manis kita."
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#gallery" class="w-full sm:w-auto bg-pinky-500 hover:bg-pinky-600 text-white font-medium px-8 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
+                    Lihat Galeri Foto <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                </a>
+                <button onclick="createFloatingHeart()" class="w-full sm:w-auto border-2 border-pinky-400 text-pinky-600 hover:bg-pinky-100 font-medium px-6 py-3 rounded-full transition-all duration-300">
+                    <i class="fas fa-heart text-pinky-500 mr-2"></i>Kirim Cinta
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHOTO GALLERY SECTION (10 PHOTOS) -->
+    <section id="gallery" class="py-20 bg-white/60 backdrop-blur-sm border-t border-pinky-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-800 mb-3">Galeri Kita</h2>
+                <div class="w-16 h-1 bg-pinky-400 mx-auto rounded-full mb-4"></div>
+                <p class="text-gray-600">Sepuluh foto yang menurut kita paling bahagia.</p>
+            </div>
+
+            <!-- Grid 10 Photos -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+                <!-- Photo 1 -->
+                <div class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer" onclick="openModal('first time.jpeg', 'fisrt kit ketemu')">
+                    <div class="aspect-square overflow-hidden bg-pinky-100">
+                        <img src="first time.jpeg" alt="Pasangan 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="font-serif font-semibold text-gray-800">first kita ketemu</h3>
+                        <p class="text-xs text-pinky-500 mt-1"><i class="far fa-calendar-alt mr-1"></i> Awal Cerita</p>
+                    </div>
+                </div>
+
+                <!-- Photo 2 -->
+                <div class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer" onclick="openModal('foto 2.jpeg', 'penyemangat')">
+                    <div class="aspect-square overflow-hidden bg-pinky-100">
+                        <img src="foto 2.jpeg" alt="Pasangan 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="font-serif font-semibold text-gray-800">penyemangat</h3>
+                        <p class="text-xs text-pinky-500 mt-1"><i class="far fa-heart mr-1"></i> Penuh Tawa</p>
+                    </div>
+                </div>
+
+                <!-- Photo 3 -->
+                <div class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer" onclick="openModal('foto 3.jpeg', 'burger date')">
+                    <div class="aspect-square overflow-hidden bg-pinky-100">
+                        <img src="foto 3.jpeg"alt="Pasangan 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="font-serif font-semibold text-gray-800">burger date</h3>
+                        <p class="text-xs text-pinky-500 mt-1"><i class="fas fa-walking mr-1"></i> Langkah Bersama</p>
+                    </div>
+                </div>
+
+                <!-- Photo 4 (Fixed Syntax) -->
+                <div class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer" onclick="openModal('foto 4.jpeg', 'running time')">
+                    <div class="aspect-square overflow-hidden bg-pinky-100">
+                        <img src="foto 4.jpeg" alt="Pasangan 4" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="font-serif font-semibold text-gray-800">running time</h3>
+                        <p class="text-xs text-pinky-500 mt-1"><i class="fas fa-sun mr-1"></i> Waktu Berharga</p>
+                    </div>
+                </div>
+
+                <!-- Photo 5 -->
+                <div class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer" onclick="openModal('foto5.jpeg', 'MIxue time')">
+                    <div class="aspect-square overflow-hidden bg-pinky-100">
+                        <img src="foto5.jpeg" alt="Pasangan 5" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="font-serif font-semibold text-gray-800">Mixue time</h3>
+                        <p class="text-xs text-pinky-500 mt-1"><i class="fas fa-hands-holding-heart mr-1"></i> Selalu Ada</p>
+                    </div>
+                </div>
+
+                <!-- Photo 6 (Fixed Syntax) -->
+                <div class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer" onclick="openModal('fotoenam.jpeg', 'kalah si..tapi ada kamu')">
+                    <div class="aspect-square overflow-hidden bg-pinky-100">
+                        <img src="fotoenam.jpeg" alt="Pasangan 6" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="font-serif font-semibold text-gray-800">kalah si..tapi ada kamu </h3>
+                        <p class="text-xs text-pinky-500 mt-1"><i class="fas fa-smile mr-1"></i> Hari Bahagia</p>
+                    </div>
+                </div>
+
+                <!-- Photo 7 -->
+                <div class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer" onclick="openModal('foto7.jpeg', 'Study date')">
+                    <div class="aspect-square overflow-hidden bg-pinky-100">
+                        <img src="foto7.jpeg" alt="Pasangan 7" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="font-serif font-semibold text-gray-800">Study date</h3>
+                        <p class="text-xs text-pinky-500 mt-1"><i class="fas fa-plane-departure mr-1"></i> Jelajah Momen</p>
+                    </div>
+                </div>
+
+                <!-- Photo 8 -->
+                <div class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer" onclick="openModal('foto8.jpeg', 'mau kondangan dulu yaks')">
+                    <div class="aspect-square overflow-hidden bg-pinky-100">
+                        <img src="foto8.jpeg" alt="Pasangan 8" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="font-serif font-semibold text-gray-800">mau kondangan dulu yaks</h3>
+                        <p class="text-xs text-pinky-500 mt-1"><i class="fas fa-sun mr-1"></i> Kehangatan</p>
+                    </div>
+                </div>
+
+                <!-- Photo 9 -->
+                <div class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer" onclick="openModal('foto 9.jpeg', 'waktu dmna saling memperbaiki')">
+    <div class="aspect-square overflow-hidden bg-pink-100">
+        <img src="foto 9.jpeg" alt="Pasangan 8" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+    </div>
+    <div class="p-4 bg-white">
+        <h3 class="font-serif font-semibold text-gray-800">waktu dmna saling memperbaiki</h3>
+        <p class="text-xs text-pink-500 mt-1"><i class="fas fa-sun mr-1"></i> Kehangatan</p>
+    </div>
+</div>
+
+                <!-- Photo 10 -->
+                <div class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer md:col-span-1 lg:col-span-2" onclick="openModal('foto10.jpeg', 'EH..ko cantik')">
+                    <div class="aspect-video sm:aspect-square md:aspect-auto md:h-48 lg:h-56 overflow-hidden bg-pinky-100">
+                        <img src="foto10.jpeg" alt="Pasangan 10" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+                    </div>
+                    <div class="p-4 bg-white">
+                        <h3 class="font-serif font-semibold text-gray-800">EH.. ko cantik </h3>
+                        <p class="text-xs text-pinky-500 mt-1"><i class="fas fa-compass mr-1"></i> Menatap Depan</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- VIDEO SECTION -->
+    <section id="video" class="py-20 bg-pinky-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-pinky-600 font-semibold text-sm tracking-wider uppercase"><i class="fas fa-video mr-1"></i> Sinema Singkat</span>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-800 mt-1 mb-3">Kenangan Terindah</h2>
+                <div class="w-16 h-1 bg-pinky-400 mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Video Player Card -->
+            <div class="bg-white p-3 sm:p-4 rounded-3xl shadow-xl border border-pinky-100 overflow-hidden">
+                <div class="relative aspect-video rounded-2xl overflow-hidden bg-black group">
+                    <video id="romanticVideo" controls class="w-full h-full object-cover" poster="photo-postr.jpeg">
+                        <source src="vidio him.mp4" type="video/mp4">
+                        Browser Anda tidak mendukung pemutar video HTML5.
+                    </video>
+                </div>
+                <div class="p-4 sm:p-6 text-center">
+                    <h3 class="font-serif font-semibold text-xl text-gray-800 mb-2">semoga..selamanya</h3>
+                    <p class="text-gray-600 text-sm max-w-xl mx-auto">
+                        Momen sederhana yang selalu berhasil menghangatkan hati setiap kali kita mengingatnya kembali.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOVE QUOTE / MESSAGE SECTION -->
+    <section id="quote" class="py-20 bg-white relative overflow-hidden">
+        <div class="max-w-3xl mx-auto px-4 text-center relative z-10">
+            <div class="text-pinky-400 text-5xl mb-6 font-serif">“</div>
+            <p id="quoteText" class="font-serif text-2xl md:text-3xl italic text-gray-700 mb-8 leading-relaxed">
+                Aku mencintaimu bukan hanya karena siapa dirimu, tetapi juga karena siapa aku saat aku bersamamu.
+            </p>
+            <div class="w-12 h-0.5 bg-pinky-300 mx-auto mb-8"></div>
+            <button onclick="newQuote()" class="bg-pinky-100 hover:bg-pinky-200 text-pinky-700 font-medium px-6 py-2.5 rounded-full text-sm transition-all duration-300">
+                <i class="fas fa-random mr-2"></i> Acak Ungkapan Cinta
+            </button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gradient-to-b from-pinky-100 to-pinky-200 py-12 border-t border-pinky-200">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="flex justify-center items-center space-x-2 text-pinky-600 font-serif font-bold text-2xl mb-4">
+                <span>IFAROY</span>
+                <i class="fas fa-heart text-pinky-500 animate-pulse text-lg"></i>
+            </div>
+            <p class="text-gray-600 text-sm max-w-md mx-auto mb-6">
+                Dibuat dengan penuh cinta untuk mengabadikan seluruh momen berharga kita selamanya.
+            </p>
+            <p class="text-xs text-gray-500">
+                &copy; <span id="year"></span> IFAROY Gallery. All Rights Reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- LIGHTBOX / PHOTO MODAL -->
+    <div id="imageModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300" onclick="closeModal()">
+        <div class="relative max-w-4xl w-full bg-white rounded-2xl overflow-hidden shadow-2xl" onclick="event.stopPropagation()">
+            <button onclick="closeModal()" class="absolute top-4 right-4 bg-black/50 hover:bg-black/80 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors z-10 focus:outline-none">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+            <div class="max-h-[75vh] overflow-hidden bg-black flex items-center justify-center">
+                <img id="modalImg" src="" alt="Zoom Foto" class="max-h-[75vh] w-auto object-contain">
+            </div>
+            <div class="p-4 bg-white text-center">
+                <h4 id="modalCaption" class="font-serif font-semibold text-lg text-gray-800"></h4>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Set dynamic current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Background Music Toggle
+        const bgMusic = document.getElementById('bgMusic');
+        const musicIcon = document.getElementById('musicIcon');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicIcon.className = "fas fa-music text-xl";
+            } else {
+                bgMusic.play().then(() => {
+                    musicIcon.className = "fas fa-pause text-xl animate-bounce";
+                }).catch(err => {
+                    console.log("Audio play deferred:", err);
+                });
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Photo Lightbox Modal Functions
+        function openModal(imgSrc, captionText) {
+            const modal = document.getElementById('imageModal');
+            document.getElementById('modalImg').src = imgSrc;
+            document.getElementById('modalCaption').textContent = captionText;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close Modal with ESC Key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Floating Heart Particles Generator
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            
+            const icons = ['fa-heart', 'fa-heart', 'fa-sparkles', 'fa-holly-berry'];
+            const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+            
+            heart.innerHTML = `<i class="fas ${randomIcon} text-pinky-500"></i>`;
+            
+            const startX = Math.random() * window.innerWidth;
+            const size = Math.random() * 20 + 14;
+            
+            heart.style.left = `${startX}px`;
+            heart.style.bottom = '0px';
+            heart.style.fontSize = `${size}px`;
+            
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        }
+
+        setInterval(createFloatingHeart, 2500);
+
+        // Quotes Array
+        const romanticQuotes = [
+            "Aku mencintaimu bukan hanya karena siapa dirimu, tetapi juga karena siapa aku saat aku bersamamu.",
+            "Bersamamu adalah tempat favoritku untuk berada.",
+            "Setiap detik yang dihabiskan bersamamu seperti mimpi indah yang tak ingin kubangun.",
+            "Jika aku tahu apa itu cinta, itu semua karena kamu.",
+            "Kisah cinta terbaik adalah saat kita jatuh cinta pada orang yang sama berulang kali.",
+            "Rumah bukan lagi sebuah tempat, melainkan dirimu."
+        ];
+
+        let currentQuoteIndex = 0;
+        function newQuote() {
+            currentQuoteIndex = (currentQuoteIndex + 1) % romanticQuotes.length;
+            const quoteElement = document.getElementById('quoteText');
+            
+            quoteElement.style.opacity = 0;
+            setTimeout(() => {
+                quoteElement.textContent = romanticQuotes[currentQuoteIndex];
+                quoteElement.style.opacity = 1;
+            }, 300);
+        }
+        document.getElementById('quoteText').style.transition = "opacity 0.3s ease-in-out";
+    </script>
+</body>
+</html>
+
+
+
